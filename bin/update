@@ -23,8 +23,8 @@ def title(*args, **kwargs):
     print(*args, **kwargs)
 
 def pushapp():
-    title('Build jekyll')
-    cmd = ['jekyll', 'build']
+    title('Build hugo')
+    cmd = ['hugo', '-d', '../dist', '-s', 'site', '-vw']
     run(cmd, cwd=ROOTP/'site')
 
     title('Pushing static website to S3')
@@ -33,7 +33,7 @@ def pushapp():
         '--profile', config.LOCAL_AWS_PROFILE,
         's3',
         'sync',
-        f'{ROOTP / "site/_site"}',
+        f'{ROOTP / "dist"}',
         f's3://{config.S3_SITE_BUCKET}',
         '--acl', 'public-read',
         '--delete'
