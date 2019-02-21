@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import click
 import subprocess as sp
@@ -24,8 +24,8 @@ def title(*args, **kwargs):
 
 def pushapp():
     title('Build hugo')
-    cmd = ['hugo', '-d', '../dist', '-s', 'site', '-vw']
-    run(cmd, cwd=ROOTP/'site')
+    cmd = ['hugo', '-d', '../dist', '-s', 'site']
+    run(cmd, cwd=ROOTP)
 
     title('Pushing static website to S3')
     cmd = [
@@ -33,7 +33,7 @@ def pushapp():
         '--profile', config.LOCAL_AWS_PROFILE,
         's3',
         'sync',
-        f'{ROOTP / "dist"}',
+        f'{ROOTP}/dist',
         f's3://{config.S3_SITE_BUCKET}',
         '--acl', 'public-read',
         '--delete'
